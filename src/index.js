@@ -1,21 +1,35 @@
-const app = reqire('express')()
-app.use((request, response) => {
+const app = require('express')()
+const port = 3000;
+const path = require('path')
+
+app.get('/', (request, response) => {
+    render(response, '../dist/index.html')
+})
+
+app.get('/about', (request, response) => {
+    render(response, '../dist/about.html')
+})
+
+app.get('/products', (request, response) => {
+    render(response, '../dist/products.html')
+})
+
+app.get('/blog', (request, response) => {
+    render(response, '../dist/blog.html')
+})
+
+
+function render(response, file) {
     response.status(200)
     response.type('text/html')
-    response.send(`
-   <!doctype html>
-    <html lang="en">
+    response.sendFile(path.join(__dirname, file))
+}
 
-<body>
-    <h2>Welcome to Node.js</h2>
-    <ul>
-        <li>Node.js is JavaScript Runtime Enviroment</li>
-        <li>Node.js uses Google V8 engine</li>
-    </ul>
- 
-</body>
-</html>
-    `)
+app.use((request, response) => {
+    response.status(404)
+    response.type('text/plain')
+    response.send('404 Not Found ไม่พบหน้านี้')
 })
-app.listen(3000,() =>
-    console.log('server start....'))
+
+app.listen(port,() =>
+    console.log(`==> Server Started port ${port}.... <Ctrl + C> to Stop`))
