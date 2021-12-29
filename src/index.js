@@ -14,6 +14,7 @@ function render(request, response) {
         case '/': fileName += 'index.html' ; break
         case '/about/' : fileName += 'about.html' ; break
         case '/product/' : fileName += 'product.html' ; break
+        case '/blog/' : fileName += 'blog.html' ; break
     }
 
    
