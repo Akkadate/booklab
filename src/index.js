@@ -6,8 +6,19 @@ http.createServer(render).listen(port)
 console.log(`Server Start on port:${port} <Ctrl + C> to Stop`);
 
 function render(request, response) {
-    let ctype = { 'Content-Type': 'text/html' }
-    fs.readFile('../dist/index.html', (error, content) => {
+    let url =request.url
+    url =(url.endsWith('/')) ? url : url + '/'
+    
+    let fileName ='../dist/'   //ไฟล์ที่เก็บอยู่ในโฟลเดอร์ html
+    switch (url) {
+        case '/': fileName += 'index.html' ; break
+        case '/about/' : fileName += 'about.html' ; break
+        case '/product/' : fileName += 'product.html' ; break
+    }
+
+   
+    fs.readFile(fileName, (error, content) => {
+        let ctype ={'Content-Type' : 'text/html'}
         if (!error){
             response.writeHead(200, ctype)
             response.write(content)
